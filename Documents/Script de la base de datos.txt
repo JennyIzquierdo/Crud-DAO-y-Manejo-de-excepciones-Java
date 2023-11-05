@@ -1,0 +1,61 @@
+--- Crear la base de datos
+CREATE DATABASE institucion_universitaria_digital_antioquia;
+
+
+--- Creación de Tablas 
+-- Tabla Funcionario
+CREATE TABLE Funcionario (
+  funcionario_id SERIAL PRIMARY KEY,
+  tipo_identificacion VARCHAR(50),
+  numero_identificacion VARCHAR(50),
+  nombres VARCHAR(100),
+  apellidos VARCHAR(100),
+  estado_civil VARCHAR(20),
+  sexo VARCHAR(10),
+  direccion VARCHAR(200),
+  telefono VARCHAR(20),
+  fecha_nacimiento DATE
+);
+
+-- Tabla Grupo Familiar
+CREATE TABLE GrupoFamiliar (
+  grupo_familiar_id SERIAL PRIMARY KEY,
+  funcionario_id INT,
+  miembro_tipo_identificacion VARCHAR(50),
+  miembro_numero_identificacion VARCHAR(50),
+  miembro_nombres VARCHAR(100),
+  miembro_apellidos VARCHAR(100),
+  miembro_estado_civil VARCHAR(20),
+  miembro_sexo VARCHAR(10),
+  miembro_direccion VARCHAR(200),
+  miembro_telefono VARCHAR(20),
+  miembro_fecha_nacimiento DATE,
+  rol VARCHAR(50),
+  FOREIGN KEY (funcionario_id) REFERENCES Funcionario (funcionario_id)
+);
+
+-- Tabla Informacion Academica
+CREATE TABLE InformacionAcademica (
+  informacion_academica_id SERIAL PRIMARY KEY,
+  funcionario_id INT,
+  universidad VARCHAR(100),
+  nivel_estudio VARCHAR(50),
+  titulo_estudio VARCHAR(200),
+  FOREIGN KEY (funcionario_id) REFERENCES Funcionario (funcionario_id)
+);
+
+--- FOREIGN KEY
+
+-- Agregar llave foranea en la tabla GrupoFamiliar
+ALTER TABLE GrupoFamiliar
+ADD CONSTRAINT fk_funcionario
+FOREIGN KEY (funcionario_id)
+REFERENCES Funcionario (funcionario_id);
+
+-- Agregar llave foranea en la tabla InformacionAcademica
+ALTER TABLE InformacionAcademica
+ADD CONSTRAINT fk_funcionario
+FOREIGN KEY (funcionario_id)
+REFERENCES Funcionario (funcionario_id);
+
+
